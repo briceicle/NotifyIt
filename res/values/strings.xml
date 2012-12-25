@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, MyFirstApp!</string>
+    <string name="app_name">MyFirstApp</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_display_message">My Message</string>
+    <string name="notification_details_text">Notification Details</string>
+    <string name="message_button_text">Message</string>
+    <string name="date_button_text">Date and Time</string>
+    <string name="via_button_text">Send via</string>
+    <string name="repeat_button_text">Repeat</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <CheckedTextView android:textColor="#c0c0c0"
+        android:id="@+id/checkedTextView" android:layout_width="fill_parent"
+        android:layout_height="wrap_content" android:checkMark="?android:attr/textCheckMark"
+        android:paddingLeft="6dip" android:paddingRight="6dip"
+        android:textSize="12dp" android:gravity="center_vertical" />
+
+</LinearLayout>
