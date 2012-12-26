@@ -6,6 +6,7 @@ import java.util.Set;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,15 +27,22 @@ public class SetViaActivity extends ListActivity implements OnClickListener {
     private HashMap<Integer, Boolean> mIsChecked =  new HashMap<Integer, Boolean>();
     // list of Strings
     private ArrayList<String> mList;
+    // index of the current checked item
+    protected int pos;
+    
+    protected NotificationEntity entity;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_view_layout);
+        setTitle(R.string.via_activity_name);
 
         mList = getListData();
 
         setListAdapter(new MyAdapter(this, R.layout.row, mList));
+        Intent intent = getIntent();
+        entity = intent.getParcelableExtra("NotificationEntity");
     }
     
     private class MyAdapter extends ArrayAdapter<String> {
@@ -87,6 +95,7 @@ public class SetViaActivity extends ListActivity implements OnClickListener {
 	public void onClick(View v) {
 		// get the CheckedTextView
         CheckedTextView ct = mCheckedList.get(v.getTag());
+        pos = ((Integer)v.getTag());
         if (ct != null) {
             // change the state and colors
             ct.toggle();
@@ -104,6 +113,7 @@ public class SetViaActivity extends ListActivity implements OnClickListener {
         	if (key != v.getTag()) {
         		CheckedTextView val = mCheckedList.get(key);
         		val.setChecked(false);
+        		val.setTextColor(Color.parseColor("#c0c0c0"));
         		mIsChecked.remove(key);
         	}
         }
@@ -122,7 +132,12 @@ public class SetViaActivity extends ListActivity implements OnClickListener {
 		    case R.id.cancel_item:
 		    	finish();
 		    	break;
-		    case R.id.save_item:;
+		    case R.id.done_item:
+		    	entity.setVia(pos);
+		    	Intent intent = getIntent();
+		    	intent.putExtra("NotificationEntityResult", entity);
+		    	setResult(RESULT_OK, intent);
+		    	finish();
 		    	break;
 		    default:
 		    	break;

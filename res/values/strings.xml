@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">Hello World, MyFirstApp!</string>
-    <string name="app_name">MyFirstApp</string>
+    <string name="app_name">NotifyIt</string>
+    <string name="schedule_activity_name">Add Notification</string>
+    <string name="message_activity_name">Message</string>
+    <string name="date_activity_name">Date &amp; Time</string>
+    <string name="via_activity_name">Send Via</string>
+    <string name="repeat_activity_name">Repeat</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
     <string name="menu_settings">Settings</string>

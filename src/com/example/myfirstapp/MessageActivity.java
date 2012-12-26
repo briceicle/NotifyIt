@@ -1,16 +1,23 @@
 package com.example.myfirstapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 public class MessageActivity extends Activity {
+	
+	private NotificationEntity entity;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.message_layout);
+        setTitle(R.string.message_activity_name);
+        Intent intent = getIntent();
+        entity = intent.getParcelableExtra("NotificationEntity");
     }
 	
 	@Override
@@ -26,7 +33,13 @@ public class MessageActivity extends Activity {
 		    case R.id.cancel_item:
 		    	finish();
 		    	break;
-		    case R.id.save_item:;
+		    case R.id.done_item:
+		    	EditText textbox = (EditText) findViewById(R.id.message_view_textbox);
+		    	entity.setMessage(textbox.getText().toString());
+		    	Intent intent = getIntent();
+		    	intent.putExtra("NotificationEntityResult", entity);
+		    	setResult(RESULT_OK, intent);
+		    	finish();
 		    	break;
 		    default:
 		    	break;

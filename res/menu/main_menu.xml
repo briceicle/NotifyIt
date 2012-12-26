@@ -7,7 +7,7 @@
         android:title="Cancel">
     </item>
     <item
-        android:id="@+id/save_item"
+        android:id="@+id/done_item"
         android:showAsAction="ifRoom"
         android:title="Done">
     </item>

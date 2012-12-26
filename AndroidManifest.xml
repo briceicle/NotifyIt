@@ -7,8 +7,7 @@
 
 
     <application android:icon="@drawable/icon" android:label="@string/app_name">
-        <activity android:name=".MyFirstApp"
-                  android:label="@string/app_name">
+        <activity android:name=".MyFirstApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,6 +20,7 @@
         <activity android:name=".DateTimeActivity" />
         <activity android:name=".SetViaActivity" />
         <activity android:name=".SetRepeatActivity" />
-        
+        <activity android:name=".NotifyActivity" />
     </application>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 </manifest>

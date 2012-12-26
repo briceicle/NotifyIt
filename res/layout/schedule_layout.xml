@@ -4,7 +4,35 @@
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
-  
+  	
+  	<TextView
+        android:id="@+id/notifications_details_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Receiver's Details" />
+    <Button
+        android:id="@+id/select_contact_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select from Contacts" />
+    <TextView
+  		android:id="@+id/firstname_label"
+  		android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="First Name" />
+    <EditText 
+    	android:id="@+id/firstname_textbox"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+  	<TextView
+  		android:id="@+id/phoneno_label"
+  		android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone No." />
+    <EditText 
+    	android:id="@+id/phoneno_textbox"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
   	<TextView
         android:id="@+id/notifications_details_label"
         android:layout_width="wrap_content"
@@ -12,22 +40,22 @@
         android:text="Notifications Details" />
   	<Button
         android:id="@+id/set_message_button"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Message" />
     <Button
         android:id="@+id/set_date_button"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Date and Time" />
     <Button
         android:id="@+id/set_via_button"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Send via" />
  	<Button
         android:id="@+id/set_repeat_button"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Repeat" />
 </LinearLayout>
