@@ -11,17 +11,23 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int icon=0x7f020000;
-        public static final int icon_notifications_tab=0x7f020001;
-        public static final int icon_schedule_tab=0x7f020002;
+        public static final int add=0x7f020000;
+        public static final int icon=0x7f020001;
+        public static final int icon_notifications_tab=0x7f020002;
+        public static final int icon_schedule_tab=0x7f020003;
+        public static final int notifyit=0x7f020004;
+        public static final int schedule=0x7f020005;
     }
     public static final class id {
-        public static final int cancel_item=0x7f060011;
+        public static final int TabImageView=0x7f060012;
+        public static final int TabLayout=0x7f060011;
+        public static final int TabTextView=0x7f060013;
+        public static final int cancel_item=0x7f060014;
         public static final int checkedTextView=0x7f060006;
-        public static final int clear_item=0x7f060013;
+        public static final int clear_item=0x7f060016;
         public static final int date_label=0x7f060000;
         public static final int date_picker=0x7f060002;
-        public static final int done_item=0x7f060012;
+        public static final int done_item=0x7f060015;
         public static final int firstname_label=0x7f060009;
         public static final int firstname_textbox=0x7f06000a;
         public static final int message_view_label=0x7f060004;
@@ -29,7 +35,7 @@ public final class R {
         public static final int notifications_details_label=0x7f060007;
         public static final int phoneno_label=0x7f06000b;
         public static final int phoneno_textbox=0x7f06000c;
-        public static final int save_item=0x7f060014;
+        public static final int save_item=0x7f060017;
         public static final int select_contact_button=0x7f060008;
         public static final int set_date_button=0x7f06000e;
         public static final int set_message_button=0x7f06000d;
@@ -46,6 +52,7 @@ public final class R {
         public static final int notifications_layout=0x7f030004;
         public static final int row=0x7f030005;
         public static final int schedule_layout=0x7f030006;
+        public static final int tab_layout=0x7f030007;
     }
     public static final class menu {
         public static final int main_menu=0x7f050000;
@@ -61,7 +68,10 @@ public final class R {
         public static final int menu_settings=0x7f040009;
         public static final int message_activity_name=0x7f040003;
         public static final int message_button_text=0x7f04000d;
+        public static final int notification_details_clear_message=0x7f040012;
+        public static final int notification_details_error_message=0x7f040011;
         public static final int notification_details_text=0x7f04000c;
+        public static final int notification_save_message=0x7f040013;
         public static final int repeat_activity_name=0x7f040006;
         public static final int repeat_button_text=0x7f040010;
         public static final int schedule_activity_name=0x7f040002;

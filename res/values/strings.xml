@@ -17,4 +17,7 @@
     <string name="date_button_text">Date and Time</string>
     <string name="via_button_text">Send via</string>
     <string name="repeat_button_text">Repeat</string>
+    <string name="notification_details_error_message">Please enter all missing information before saving.</string>
+    <string name="notification_details_clear_message">Are you sure you want to clear all the fields?</string>
+    <string name="notification_save_message">Your notification has been scheduled successfully.</string>
 </resources>

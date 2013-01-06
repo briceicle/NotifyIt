@@ -18,7 +18,15 @@ public class MessageActivity extends Activity {
         setTitle(R.string.message_activity_name);
         Intent intent = getIntent();
         entity = intent.getParcelableExtra("NotificationEntity");
+        initView();
     }
+	
+	private void initView() {
+		EditText textbox = (EditText) findViewById(R.id.message_view_textbox);
+		if (entity.getMessage() != null) {
+			textbox.setText(entity.getMessage());
+		}
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

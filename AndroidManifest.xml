@@ -6,7 +6,7 @@
       <uses-sdk android:minSdkVersion="8" />
 
 
-    <application android:icon="@drawable/icon" android:label="@string/app_name">
+    <application android:icon="@drawable/notifyit" android:label="@string/app_name">
         <activity android:name=".MyFirstApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,8 @@
         <activity android:name=".DateTimeActivity" />
         <activity android:name=".SetViaActivity" />
         <activity android:name=".SetRepeatActivity" />
-        <activity android:name=".NotifyActivity" />
+        
+        <receiver android:process=":remote" android:name=".NotifyActivity"/>
     </application>
     <uses-permission android:name="android.permission.SEND_SMS"/>
 </manifest>

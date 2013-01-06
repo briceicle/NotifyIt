@@ -48,6 +48,20 @@ public class NotificationOpenHelper extends SQLiteOpenHelper {
 		return cursor.getInt(0);
 	}
 	
+	public NotificationEntity getEntity(String id) {
+		NotificationEntity entity = new NotificationEntity();
+		Cursor cursor = getReadableDatabase().rawQuery("select * from "+ TABLE_NAME + " where " + ID_FIELD + " = " + id, null);
+		cursor.moveToFirst();
+		entity.setId(cursor.getInt(0));
+		entity.setName(cursor.getString(1));
+		entity.setPhoneno(cursor.getString(2));
+		entity.setMessage(cursor.getString(3));
+		entity.setDate(cursor.getString(4));
+		entity.setVia(cursor.getInt(5));
+		entity.setRepeat(cursor.getInt(6));
+		return entity;
+	}
+	
 	public void saveEntity(NotificationEntity entity) {
 		ContentValues values = new ContentValues();
 		values.put(ID_FIELD, entity.getId());

@@ -1,7 +1,10 @@
 package com.example.myfirstapp;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,25 +21,43 @@ import android.widget.TimePicker.OnTimeChangedListener;
 public class DateTimeActivity extends Activity implements OnDateChangedListener, OnTimeChangedListener {
 	
 	private NotificationEntity entity;
-	private Calendar date;
+	private Calendar cal;
+	private SimpleDateFormat dateFormat;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.date_time_picker_layout);
         setTitle(R.string.date_activity_name);
-        initView();
-        date = Calendar.getInstance();
+        cal = Calendar.getInstance();
+        dateFormat = new SimpleDateFormat();
         Intent intent = getIntent();
         entity = intent.getParcelableExtra("NotificationEntity");
+        initView();
     }
 	
 	private void initView() {
-		final Calendar c = Calendar.getInstance();
+		try {
+			Date date = dateFormat.parse(entity.getDate());
+			cal.setTime(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		
 		DatePicker datePicker = (DatePicker) findViewById(R.id.date_picker);
-		datePicker.init(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), this);
+		datePicker.init(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), this);
 		
 		TimePicker timePicker = (TimePicker) findViewById(R.id.time_picker);
+		timePicker.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
+		timePicker.setCurrentMinute(cal.get(Calendar.MINUTE));
 		timePicker.setOnTimeChangedListener(this);
+		
+		TextView label1 = (TextView) findViewById(R.id.date_label);
+		label1.setText("Date: " + cal.get(Calendar.YEAR) + "-" + cal.get(Calendar.MONTH)  + "-" + cal.get(Calendar.DAY_OF_MONTH));
+		
+		TextView label2 = (TextView) findViewById(R.id.time_label);
+		label2.setText("Time: " + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE));
 	}
 
 	@Override
@@ -44,15 +65,15 @@ public class DateTimeActivity extends Activity implements OnDateChangedListener,
 			int dayOfMonth) {
 		TextView label = (TextView) findViewById(R.id.date_label);
 		label.setText("Date: " + year + "-" + monthOfYear + "-" + dayOfMonth);
-		date.set(year, monthOfYear, dayOfMonth);
+		cal.set(year, monthOfYear, dayOfMonth);
 	}
 
 	@Override
 	public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 		TextView label = (TextView) findViewById(R.id.time_label);
 		label.setText("Time: " + hourOfDay + ":" + minute);
-		date.set(Calendar.HOUR_OF_DAY, hourOfDay);
-		date.set(Calendar.MINUTE, minute);
+		cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+		cal.set(Calendar.MINUTE, minute);
 	}
 	
 	@Override
@@ -69,7 +90,7 @@ public class DateTimeActivity extends Activity implements OnDateChangedListener,
 		    	finish();
 		    	break;
 		    case R.id.done_item:
-		    	entity.setDate(date.getTime().toLocaleString());
+		    	entity.setDate(dateFormat.format(cal.getTime()));
 		    	Intent intent = getIntent();
 		    	intent.putExtra("NotificationEntityResult", entity);
 		    	setResult(RESULT_OK, intent);

@@ -1,14 +1,14 @@
 package com.example.myfirstapp;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -106,21 +106,102 @@ public class ScheduleActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		    case R.id.clear_item:
+		    	showPromptDialog();
 		    	break;
 		    case R.id.save_item:
 		    	TextView name = (TextView) findViewById(R.id.firstname_textbox);
 		    	TextView phoneNo = (TextView) findViewById(R.id.phoneno_textbox);
 		    	entity.setName(name.getText().toString());
 		    	entity.setPhoneno(phoneNo.getText().toString());
-		    	entity.setId(dbHelper.count() + 1);
-		    	dbHelper.saveEntity(entity);
-		    	//TODO clear the form, reset entity, and schedule a notify activity
-		    	setNotificationAlert();
+		    	//if (validateInputForm()) {
+			    	entity.setId(dbHelper.count() + 1);
+			    	dbHelper.saveEntity(entity);
+			    	
+			    	//schedule a notify activity
+			    	setNotificationAlert();
+			    	
+			    	showSuccessDialog();
+		    	//}
 		    	break;
 		    default:
 		    	break;
 	    }	
 	    return true;
+	}
+	
+	private void clearInputFormAndResetEntity() {
+		TextView name = (TextView) findViewById(R.id.firstname_textbox);
+    	TextView phoneNo = (TextView) findViewById(R.id.phoneno_textbox);
+    	name.setText("");
+    	phoneNo.setText("");
+    	entity = new NotificationEntity();
+	}
+	
+	private boolean validateInputForm() {
+		boolean valid = true;
+		if (entity.getName() == null || entity.getName().length() == 0 || 
+			entity.getPhoneno() == null || entity.getPhoneno().length() == 0 ||
+			entity.getMessage() == null || entity.getMessage().length() == 0 ||
+			entity.getDate() == null || entity.getDate().length() == 0) {
+			showErrorDialog();
+			valid = false;
+		}
+		return valid;
+	}
+	
+	private void showErrorDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Notification Details Required");
+        builder.setMessage(R.string.notification_details_error_message);
+        builder.setCancelable(true);
+        builder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+	}
+	
+	private void showPromptDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Clear Notification Details");
+        builder.setMessage(R.string.notification_details_clear_message);
+        builder.setCancelable(true);
+        builder.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        builder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            	clearInputFormAndResetEntity();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+	}
+	
+	private void showSuccessDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Notification Saved Successfully.");
+        builder.setMessage(R.string.notification_save_message);
+        builder.setCancelable(true);
+        builder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            	dialog.cancel();
+		    	clearInputFormAndResetEntity();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
 	}
 	
 	@Override
@@ -133,14 +214,15 @@ public class ScheduleActivity extends Activity {
 	
 	private void setNotificationAlert() {
 		AlarmManager alarm = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-		Intent intent = new Intent(getApplicationContext(), NotifyActivity.class);
+		Intent intent = new Intent(this, NotifyActivity.class);
 		intent.putExtra("NotificationEntity", entity);
-		PendingIntent pi = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+		PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		
 		try {
-			Date date = new SimpleDateFormat("MMMM d, yyyy hh:mm:ss", Locale.ENGLISH).parse(entity.getDate());
-			alarm.setRepeating(AlarmManager.RTC_WAKEUP, date.getTime(), 1000 * 5 , pi);
-		} catch (ParseException e) {
+			Date date = new SimpleDateFormat().parse(entity.getDate());
+			//alarm.setRepeating(AlarmManager.RTC_WAKEUP, date.getTime(), 1000 * 5 , pi);
+			alarm.set(AlarmManager.RTC_WAKEUP, date.getTime(), pi);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

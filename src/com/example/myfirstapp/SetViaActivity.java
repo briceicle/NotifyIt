@@ -65,6 +65,12 @@ public class SetViaActivity extends ListActivity implements OnClickListener {
 		
 		    CheckedTextView ct = (CheckedTextView) view.findViewById(R.id.checkedTextView);
 		    ct.setText(items.get(position));
+		    
+		    //check the first item by default
+		    if (position == entity.getVia()) {
+		    	ct.setChecked(true);
+		    }
+		    
 		    // set current state and color
 		    if (mIsChecked.get(position) != null) {
 		        if (mIsChecked.get(position)) {
