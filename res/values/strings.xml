@@ -2,7 +2,8 @@
 <resources>
     <string name="hello">Hello World, MyFirstApp!</string>
     <string name="app_name">NotifyIt</string>
-    <string name="schedule_activity_name">Add Notification</string>
+    <string name="add_notification_activity_name">Add Notification</string>
+    <string name="edit_notification_activity_name">Edit Notification</string>
     <string name="message_activity_name">Message</string>
     <string name="date_activity_name">Date &amp; Time</string>
     <string name="via_activity_name">Send Via</string>
@@ -20,4 +21,5 @@
     <string name="notification_details_error_message">Please enter all missing information before saving.</string>
     <string name="notification_details_clear_message">Are you sure you want to clear all the fields?</string>
     <string name="notification_save_message">Your notification has been scheduled successfully.</string>
+    <string name="no_notification_message">NO SCHEDULED NOTIFICATIONS</string>
 </resources>

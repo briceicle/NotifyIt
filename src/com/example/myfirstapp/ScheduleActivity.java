@@ -10,7 +10,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,22 +24,31 @@ import android.widget.TextView;
 
 public class ScheduleActivity extends Activity {
 	
-	private NotificationOpenHelper dbHelper;
-	public  NotificationEntity entity;
+	protected NotificationOpenHelper dbHelper;
+	protected  NotificationEntity entity;
+	public final int PICK_CONTACT = 0;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule_layout);
-        setTitle(R.string.schedule_activity_name);
+        setTitle(R.string.add_notification_activity_name);
         initView();
         
-        dbHelper = new NotificationOpenHelper(getApplicationContext());
         entity = new NotificationEntity();
+        dbHelper = new NotificationOpenHelper(this);
     }
 	
 	private void initView() {
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		
+		Button selectContactButton = (Button) findViewById(R.id.select_contact_button);
+		selectContactButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				handleSelectContactButtonClick();	
+			}
+		});
 		
 		Button messageButton = (Button) findViewById(R.id.set_message_button);		
 		messageButton.setOnClickListener(new View.OnClickListener() {			
@@ -69,6 +81,11 @@ public class ScheduleActivity extends Activity {
 				handleRepeatButtonClick();	
 			}
 		});
+	}
+	
+	private void handleSelectContactButtonClick() {
+		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        startActivityForResult(intent, 0);
 	}
 	
 	private void handleMessageButtonClick() {
@@ -113,15 +130,15 @@ public class ScheduleActivity extends Activity {
 		    	TextView phoneNo = (TextView) findViewById(R.id.phoneno_textbox);
 		    	entity.setName(name.getText().toString());
 		    	entity.setPhoneno(phoneNo.getText().toString());
-		    	//if (validateInputForm()) {
-			    	entity.setId(dbHelper.count() + 1);
+		    	if (validateInputForm()) {
 			    	dbHelper.saveEntity(entity);
 			    	
 			    	//schedule a notify activity
 			    	setNotificationAlert();
 			    	
 			    	showSuccessDialog();
-		    	//}
+			    	
+		    	}
 		    	break;
 		    default:
 		    	break;
@@ -129,7 +146,7 @@ public class ScheduleActivity extends Activity {
 	    return true;
 	}
 	
-	private void clearInputFormAndResetEntity() {
+	protected void clearInputFormAndResetEntity() {
 		TextView name = (TextView) findViewById(R.id.firstname_textbox);
     	TextView phoneNo = (TextView) findViewById(R.id.phoneno_textbox);
     	name.setText("");
@@ -137,7 +154,7 @@ public class ScheduleActivity extends Activity {
     	entity = new NotificationEntity();
 	}
 	
-	private boolean validateInputForm() {
+	protected boolean validateInputForm() {
 		boolean valid = true;
 		if (entity.getName() == null || entity.getName().length() == 0 || 
 			entity.getPhoneno() == null || entity.getPhoneno().length() == 0 ||
@@ -187,7 +204,7 @@ public class ScheduleActivity extends Activity {
         dialog.show();
 	}
 	
-	private void showSuccessDialog() {
+	protected void showSuccessDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Notification Saved Successfully.");
         builder.setMessage(R.string.notification_save_message);
@@ -209,10 +226,40 @@ public class ScheduleActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(resultCode == RESULT_OK && requestCode == 1){
 			entity = data.getParcelableExtra("NotificationEntityResult");
+		 } else if (resultCode == RESULT_OK && requestCode == PICK_CONTACT) {
+			Uri contactData = data.getData();
+			String name = null;
+			String phoneNumber = null;
+	        Cursor c =  managedQuery(contactData, null, null, null, null);
+	        if (c.moveToFirst()) {
+	          String contactId = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
+	          name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+	          phoneNumber = null;
+	          
+	          String hasPhone = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+
+	          if (hasPhone.equalsIgnoreCase("1")) 
+	          {
+		           Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ contactId,null, null);
+		           if (phones.moveToFirst()) {
+		             phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+		           }
+		           phones.close();
+	          }
+	        }
+	        
+	        if (name != null) {
+	        	TextView nameTextBox = (TextView) findViewById(R.id.firstname_textbox);
+	        	nameTextBox.setText(name);
+	        }
+	        if (phoneNumber != null) {
+		    	TextView phoneNoTextBox = (TextView) findViewById(R.id.phoneno_textbox);
+		    	phoneNoTextBox.setText(phoneNumber);
+	        }
 		 }
 	}
 	
-	private void setNotificationAlert() {
+	protected void setNotificationAlert() {
 		AlarmManager alarm = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 		Intent intent = new Intent(this, NotifyActivity.class);
 		intent.putExtra("NotificationEntity", entity);
@@ -220,8 +267,19 @@ public class ScheduleActivity extends Activity {
 		
 		try {
 			Date date = new SimpleDateFormat().parse(entity.getDate());
-			//alarm.setRepeating(AlarmManager.RTC_WAKEUP, date.getTime(), 1000 * 5 , pi);
-			alarm.set(AlarmManager.RTC_WAKEUP, date.getTime(), pi);
+			if (entity.getRepeat() == 0) {
+				alarm.set(AlarmManager.RTC_WAKEUP, date.getTime(), pi);
+			} else if (entity.getRepeat() == 1) {
+				alarm.setRepeating(AlarmManager.RTC_WAKEUP, date.getTime(), 1000 * 60 * 60 * 24, pi);
+			} else if (entity.getRepeat() == 2) {
+				alarm.setRepeating(AlarmManager.RTC_WAKEUP, date.getTime(), 1000 * 60 * 60 * 24 * 7, pi);
+			} else if (entity.getRepeat() == 3) {
+				alarm.setRepeating(AlarmManager.RTC_WAKEUP, date.getTime(), 1000 * 60 * 60 * 24 * 7 * 2, pi);
+			} else if (entity.getRepeat() == 4) {
+				alarm.setRepeating(AlarmManager.RTC_WAKEUP, date.getTime(), 1000 * 60 * 60 * 24 * 30, pi);
+			} else if (entity.getRepeat() == 5) {
+				alarm.setRepeating(AlarmManager.RTC_WAKEUP, date.getTime(), 1000 * 60 * 60 * 24 * 365, pi);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

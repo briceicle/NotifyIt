@@ -26,15 +26,15 @@ public class MyFirstApp extends TabActivity {
     	
     	//Schedule tab
     	TabSpec scheduleSpec = tabHost.newTabSpec("Schedule");
-    	//scheduleSpec.setIndicator("Schedule", getResources().getDrawable(R.drawable.icon_schedule_tab));
-    	scheduleSpec.setIndicator(prepareTabView("Schedule", R.drawable.icon_schedule_tab));
+    	scheduleSpec.setIndicator("", getResources().getDrawable(R.drawable.icon_schedule_tab));
+    	//scheduleSpec.setIndicator(prepareTabView("Schedule", R.drawable.icon_schedule_tab));
         Intent scheduleIntent = new Intent(this, ScheduleActivity.class);
         scheduleSpec.setContent(scheduleIntent);
         
         //Notifications tab
         TabSpec notificationsSpec = tabHost.newTabSpec("Notifications");
-        //notificationsSpec.setIndicator("Notifications", getResources().getDrawable(R.drawable.icon_notifications_tab));
-        notificationsSpec.setIndicator(prepareTabView("Notifications", R.drawable.icon_notifications_tab));
+        notificationsSpec.setIndicator("", getResources().getDrawable(R.drawable.icon_notifications_tab));
+        //notificationsSpec.setIndicator(prepareTabView("Notifications", R.drawable.icon_notifications_tab));
         Intent notificationsIntent = new Intent(this, NotificationsActivity.class);
         notificationsSpec.setContent(notificationsIntent);
         
