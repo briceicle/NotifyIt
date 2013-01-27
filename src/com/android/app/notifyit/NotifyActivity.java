@@ -1,12 +1,18 @@
-package com.example.myfirstapp;
+package com.android.app.notifyit;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.telephony.SmsManager;
-import android.widget.Toast;
 
+/**
+ * This class sends the SMS notification
+ * at the scheduled date
+ * 
+ * @author bnkengsa
+ *
+ */
 public class NotifyActivity extends BroadcastReceiver {
 	
 	private NotificationEntity entity;
@@ -14,14 +20,9 @@ public class NotifyActivity extends BroadcastReceiver {
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		try {
-			Toast.makeText(context, "Alarm worked", Toast.LENGTH_LONG).show();
-			this.entity = intent.getParcelableExtra("NotificationEntity");
-			this.context = context;
-			sendNotification();
-		} catch (Exception e) {
-			Toast.makeText(context, "Id=" + entity.getId() + " Error:" +e.getMessage(), Toast.LENGTH_LONG).show();
-		}
+		this.entity = intent.getParcelableExtra("NotificationEntity");
+		this.context = context;
+		sendNotification();
 	}
 	
 	private void sendNotification() {

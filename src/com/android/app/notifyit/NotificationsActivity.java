@@ -1,6 +1,8 @@
-package com.example.myfirstapp;
+package com.android.app.notifyit;
 
 import java.util.List;
+
+import com.android.app.notifyit.R;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,12 +11,18 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+/**
+ * This activity retrieves all notification from the DB
+ * 
+ * @author bnkengsa
+ *
+ */
 public class NotificationsActivity extends Activity {
 	
 	private NotificationOpenHelper dbHelper;
 	
+	/** Called when the activity is first created. */
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notifications_layout);

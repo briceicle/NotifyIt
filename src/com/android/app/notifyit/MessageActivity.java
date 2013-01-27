@@ -1,4 +1,6 @@
-package com.example.myfirstapp;
+package com.android.app.notifyit;
+
+import com.android.app.notifyit.R;
 
 import android.app.Activity;
 import android.content.Intent;

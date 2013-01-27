@@ -1,9 +1,12 @@
-package com.example.myfirstapp;
+package com.android.app.notifyit;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import com.android.app.notifyit.R;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

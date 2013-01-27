@@ -1,8 +1,10 @@
-package com.example.myfirstapp;
+package com.android.app.notifyit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+
+import com.android.app.notifyit.R;
 
 import android.app.ListActivity;
 import android.content.Context;
@@ -14,13 +16,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 
-public class SetRepeatActivity extends ListActivity implements OnClickListener {
-
+public class SetViaActivity extends ListActivity implements OnClickListener {
+	
 	// store CheckTextView's
     private HashMap<Integer, CheckedTextView> mCheckedList = new HashMap<Integer, CheckedTextView>();
     // store state
@@ -36,7 +38,7 @@ public class SetRepeatActivity extends ListActivity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_view_layout);
-        setTitle(R.string.repeat_activity_name);
+        setTitle(R.string.via_activity_name);
 
         mList = getListData();
 
@@ -67,7 +69,7 @@ public class SetRepeatActivity extends ListActivity implements OnClickListener {
 		    ct.setText(items.get(position));
 		    
 		    //check the first item by default
-		    if (position == entity.getRepeat()) {
+		    if (position == entity.getVia()) {
 		    	ct.setChecked(true);
 		    }
 		    
@@ -83,24 +85,20 @@ public class SetRepeatActivity extends ListActivity implements OnClickListener {
 		    // tag it - used when clicked upon to change state
 		    ct.setTag(position);
 		    mCheckedList.put(position, ct);
-		    ct.setOnClickListener(SetRepeatActivity.this);
+		    ct.setOnClickListener(SetViaActivity.this);
 		
 		    return view;
 		}
     }
     
-    private ArrayList<String> getListData() {
+    protected ArrayList<String> getListData() {
     	ArrayList<String> list = new ArrayList<String>();
-    	list.add("Never");
-    	list.add("Every Day");
-    	list.add("Every Week");
-    	list.add("Every 2 Weeks");
-    	list.add("Every Month");
-    	list.add("Every Year");
+    	list.add("SMS\\Text Message");
+    	list.add("Email");
     	
     	return list;
     }
-    
+
 	@Override
 	public void onClick(View v) {
 		// get the CheckedTextView
@@ -135,7 +133,7 @@ public class SetRepeatActivity extends ListActivity implements OnClickListener {
 	   inflater.inflate(R.menu.main_menu, menu);
 	   return true;
 	 }
-    
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -143,7 +141,7 @@ public class SetRepeatActivity extends ListActivity implements OnClickListener {
 		    	finish();
 		    	break;
 		    case R.id.done_item:
-		    	entity.setRepeat(pos);
+		    	entity.setVia(pos);
 		    	Intent intent = getIntent();
 		    	intent.putExtra("NotificationEntityResult", entity);
 		    	setResult(RESULT_OK, intent);
@@ -152,6 +150,7 @@ public class SetRepeatActivity extends ListActivity implements OnClickListener {
 		    default:
 		    	break;
 	    }
+	
 	    return true;
 	}
 }

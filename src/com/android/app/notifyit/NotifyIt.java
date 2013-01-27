@@ -1,16 +1,20 @@
-package com.example.myfirstapp;
+package com.android.app.notifyit;
+
+import com.android.app.notifyit.R;
 
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
-import android.widget.TextView;
 
-public class MyFirstApp extends TabActivity {
+/**
+ * This class is the entry point of the app
+ * 
+ * @author bnkengsa
+ *
+ */
+public class NotifyIt extends TabActivity {
 	
 	/** Called when the activity is first created. */
     @Override
@@ -41,14 +45,5 @@ public class MyFirstApp extends TabActivity {
         //Adding all TabSpec to TabHost
         tabHost.addTab(scheduleSpec);
         tabHost.addTab(notificationsSpec);
-    }
-    
-    private View prepareTabView(String text, int resId) {
-        View view = LayoutInflater.from(this).inflate(R.layout.tab_layout, null);
-        ImageView iv = (ImageView) view.findViewById(R.id.TabImageView);
-        TextView tv = (TextView) view.findViewById(R.id.TabTextView);
-        iv.setImageResource(resId);
-        tv.setText(text);
-        return view;
     }
 }

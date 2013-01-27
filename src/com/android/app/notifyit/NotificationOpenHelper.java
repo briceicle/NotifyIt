@@ -1,4 +1,4 @@
-package com.example.myfirstapp;
+package com.android.app.notifyit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * This class manages notifications in the database
+ * 
+ * @author bnkengsa
+ *
+ */
 public class NotificationOpenHelper extends SQLiteOpenHelper {
 	
 	private static final int DATABASE_VERSION = 1;

@@ -1,7 +1,9 @@
-package com.example.myfirstapp;
+package com.android.app.notifyit;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.android.app.notifyit.R;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -22,12 +24,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * This class schedules a notification
+ * 
+ * @author bnkengsa
+ *
+ */
 public class ScheduleActivity extends Activity {
 	
 	protected NotificationOpenHelper dbHelper;
 	protected  NotificationEntity entity;
 	public final int PICK_CONTACT = 0;
 	
+	/** Called when the activity is first created. */
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule_layout);
@@ -130,6 +139,7 @@ public class ScheduleActivity extends Activity {
 		    	TextView phoneNo = (TextView) findViewById(R.id.phoneno_textbox);
 		    	entity.setName(name.getText().toString());
 		    	entity.setPhoneno(phoneNo.getText().toString());
+		    	
 		    	if (validateInputForm()) {
 			    	dbHelper.saveEntity(entity);
 			    	

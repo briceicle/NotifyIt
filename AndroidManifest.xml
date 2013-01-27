@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.example.myfirstapp"
+      package="com.android.app.notifyit"
       android:versionCode="1"
       android:versionName="1.0">
       <uses-sdk android:minSdkVersion="8" />
 
 
     <application android:icon="@drawable/notifyit" android:label="@string/app_name">
-        <activity android:name=".MyFirstApp">
+        <activity android:name=".NotifyIt">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -20,8 +20,10 @@
         <activity android:name=".DateTimeActivity" />
         <activity android:name=".SetViaActivity" />
         <activity android:name=".SetRepeatActivity" />
+        <activity android:name="com.android.app.notifyit.EditNotificationActivity" />
         
-        <receiver android:process=":remote" android:name=".NotifyActivity"/>
+        <receiver android:process=":remote" android:name="com.android.app.notifyit.NotifyActivity"/>
     </application>
     <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
 </manifest>

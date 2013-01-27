@@ -1,4 +1,6 @@
-package com.example.myfirstapp;
+package com.android.app.notifyit;
+
+import com.android.app.notifyit.R;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +10,15 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * This activity is to edit a saved notification
+ * 
+ * @author bnkengsa
+ *
+ */
 public class EditNotificationActivity extends ScheduleActivity {
 
+	/** Called when the activity is first created. */
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.edit_notification_activity_name);
@@ -38,10 +47,11 @@ public class EditNotificationActivity extends ScheduleActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		    case R.id.delete_item:
-		    	super.clearInputFormAndResetEntity();
-		    	dbHelper.deleteEntity(entity.getId()+"");
-		    	setResult(RESULT_OK, null);
-		    	finish();
+		    	if (dbHelper.deleteEntity(entity.getId()+"")) {
+		    		clearInputFormAndResetEntity();
+		    		setResult(RESULT_OK, null);
+		    		finish();
+		    	}
 		    	break;
 		    case R.id.save_item:
 		    	TextView name = (TextView) findViewById(R.id.firstname_textbox);

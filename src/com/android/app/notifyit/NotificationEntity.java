@@ -1,4 +1,4 @@
-package com.example.myfirstapp;
+package com.android.app.notifyit;
 
 import android.os.Parcel;
 import android.os.Parcelable;
