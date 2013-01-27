@@ -20,7 +20,7 @@
         <activity android:name=".DateTimeActivity" />
         <activity android:name=".SetViaActivity" />
         <activity android:name=".SetRepeatActivity" />
-        <activity android:name="com.android.app.notifyit.EditNotificationActivity" />
+        <activity android:name=".EditNotificationActivity" />
         
         <receiver android:process=":remote" android:name="com.android.app.notifyit.NotifyActivity"/>
     </application>

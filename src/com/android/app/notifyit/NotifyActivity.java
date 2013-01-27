@@ -13,7 +13,7 @@ import android.telephony.SmsManager;
  * @author bnkengsa
  *
  */
-public class NotifyActivity extends BroadcastReceiver {
+public class NotifyActivity extends BroadcastReceiver{
 	
 	private NotificationEntity entity;
 	private Context context;
@@ -31,6 +31,8 @@ public class NotifyActivity extends BroadcastReceiver {
 			PendingIntent sentPI = PendingIntent.getActivity(context, 0, new Intent("SMS_SENT"), 0);
 			PendingIntent deliveredPI = PendingIntent.getActivity(context, 0, new Intent("SMS_DELIVERED"), 0);
 			smsManager.sendTextMessage(entity.getPhoneno(), null, entity.getMessage(), sentPI, deliveredPI);
+		} else if (entity.getVia() == 1) {
+			
 		}
 	}
 }

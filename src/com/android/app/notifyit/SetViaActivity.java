@@ -58,7 +58,6 @@ public class SetViaActivity extends ListActivity implements OnClickListener {
 		}
 		
 		public View getView(final int position, View view, ViewGroup parent) {
-		    // we are not reusing anything today
 		    LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		    view = vi.inflate(R.layout.row, null);
 		
@@ -94,7 +93,7 @@ public class SetViaActivity extends ListActivity implements OnClickListener {
     protected ArrayList<String> getListData() {
     	ArrayList<String> list = new ArrayList<String>();
     	list.add("SMS\\Text Message");
-    	list.add("Email");
+    	list.add("Voice Call");
     	
     	return list;
     }

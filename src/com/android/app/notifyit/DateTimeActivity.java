@@ -55,7 +55,7 @@ public class DateTimeActivity extends Activity implements OnDateChangedListener,
 		timePicker.setOnTimeChangedListener(this);
 		
 		TextView label1 = (TextView) findViewById(R.id.date_label);
-		label1.setText("Date: " + cal.get(Calendar.YEAR) + "-" + cal.get(Calendar.MONTH)  + "-" + cal.get(Calendar.DAY_OF_MONTH));
+		label1.setText("Date: " + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH)+1)  + "-" + cal.get(Calendar.DAY_OF_MONTH));
 		
 		TextView label2 = (TextView) findViewById(R.id.time_label);
 		label2.setText("Time: " + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE));
@@ -65,7 +65,7 @@ public class DateTimeActivity extends Activity implements OnDateChangedListener,
 	public void onDateChanged(DatePicker view, int year, int monthOfYear,
 			int dayOfMonth) {
 		TextView label = (TextView) findViewById(R.id.date_label);
-		label.setText("Date: " + year + "-" + monthOfYear + "-" + dayOfMonth);
+		label.setText("Date: " + year + "-" + (monthOfYear+1) + "-" + dayOfMonth);
 		cal.set(year, monthOfYear, dayOfMonth);
 	}
 

@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * This activity is to edit a saved notification
@@ -24,7 +23,6 @@ public class EditNotificationActivity extends ScheduleActivity {
         setTitle(R.string.edit_notification_activity_name);
         Intent intent = getIntent();
         entity = intent.getParcelableExtra("NotificationEntity");
-        Toast.makeText(this, "Id="+entity.getId(), Toast.LENGTH_SHORT).show();
         
         initView();
     }
